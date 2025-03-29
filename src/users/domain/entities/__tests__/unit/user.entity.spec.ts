@@ -1,21 +1,29 @@
 import { faker } from '@faker-js/faker';
 
-import { UserEntity } from '@/users/domain/entities/user.entity';
+import { UserEntity, UserProps } from '@/users/domain/entities/user.entity';
+
 describe('UserEntity', () => {
-	it('should be defined and have the correct props', () => {
-		const props = {
+	let props: UserProps;
+	let sut: UserEntity;
+
+	beforeEach(() => {
+		props = {
 			name: faker.person.fullName(),
 			email: faker.internet.email(),
 			password: faker.internet.password(),
 		};
 
-		const sut = new UserEntity(props);
+		sut = new UserEntity(props);
+	});
 
+	it('should be defined and have the correct props', () => {
 		expect(sut).toBeDefined();
 		expect(sut).toBeInstanceOf(UserEntity);
-		expect(sut.props.name).toBe(props.name);
-		expect(sut.props.email).toBe(props.email);
-		expect(sut.props.password).toBe(props.password);
+		expect(
+			Object.entries(props).map(([key, value]) => {
+				expect(sut.props[key]).toEqual(value);
+			}),
+		);
 		expect(sut.props.createdAt).toBeInstanceOf(Date);
 	});
 });
