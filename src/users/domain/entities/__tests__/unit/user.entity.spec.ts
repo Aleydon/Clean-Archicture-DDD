@@ -12,7 +12,10 @@ describe('UserEntity', () => {
 		const sut = new UserEntity(props);
 
 		expect(sut).toBeDefined();
-		expect(sut.props).toBe(props);
 		expect(sut).toBeInstanceOf(UserEntity);
+		expect(sut.props.name).toBe(props.name);
+		expect(sut.props.email).toBe(props.email);
+		expect(sut.props.password).toBe(props.password);
+		expect(sut.props.createdAt).toBeInstanceOf(Date);
 	});
 });
